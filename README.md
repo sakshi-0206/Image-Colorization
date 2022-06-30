@@ -18,7 +18,7 @@ This is the implementation of Conditional GANs, to convert images from greyscale
 ### CGAN
 In CGAN (Conditional GAN), labels act as an extension to the latent space z to generate and discriminate images better. The top figure below is the regular GAN and the bottom adds labels to the generator and the discriminator to train both networks better.
 
-<img src="assets/cgan.png" width="40%" height="40%" align="middle">
+<img src="assets/cgan.png" width="300" height="300">
 
 In GAN, there is no control over modes of the data to be generated. The conditional GAN changes that by adding the label y as an additional parameter to the generator and hopes that the corresponding images are generated. We also add the labels to the discriminator input to distinguish real images better.
 
