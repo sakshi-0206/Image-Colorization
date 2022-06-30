@@ -18,36 +18,36 @@ This is the implementation of Conditional GANs, to convert images from greyscale
 ### CGAN
 In CGAN (Conditional GAN), labels act as an extension to the latent space z to generate and discriminate images better. The top figure below is the regular GAN and the bottom adds labels to the generator and the discriminator to train both networks better.
 
-<img src="asset/cgan.png" width="40%" height="40%" align="middle">
+<img src="assets/cgan.png" width="40%" height="40%" align="middle">
 
 In GAN, there is no control over modes of the data to be generated. The conditional GAN changes that by adding the label y as an additional parameter to the generator and hopes that the corresponding images are generated. We also add the labels to the discriminator input to distinguish real images better.
 
-<img src="asset/cgan_1.jpeg" width="40%" height="40%" align="middle">
+<img src="assets/cgan_1.jpeg" width="40%" height="40%" align="middle">
 
 In MNIST, we sample the label y from a uniform distribution to generate a number from 0 to 9. We encode this value into a 1-hot vector. For example, the value 3 will be encoded as (0, 0, 0, 1, 0, 0, 0, 0, 0, 0). We feed the vector and the noise z to the generator to create an image that resembles “3”. For the discriminator, we add the supposed label as a one-hot vector to its input.
 
 #### Objective
 The objective of a conditional GAN can be expressed as
 
-<img src="asset/obj1.jpg" width="50%" height="10%" align="middle">
+<img src="assets/obj1.jpg" width="50%" height="10%" align="middle">
 
 where G tries to minimize this objective against an adversarial D that tries to maximize it, i.e. G∗ = arg minG maxD LcGAN (G, D).
 To test the importance of conditioning the discriminator, we also compare to an unconditional variant in which the
 discriminator does not observe x:
 
-<img src="asset/obj2.jpg" width="50%" height="10%" align="middle">
+<img src="assets/obj2.jpg" width="50%" height="10%" align="middle">
 
 Previous approaches have found it beneficial to mix the GAN objective with a more traditional loss, such as L2 distance [43]. The discriminator’s job remains unchanged, but the generator is tasked to not only fool the discriminator but also to be near the ground  truth output in an L2 sense. We also explore this option, using L1 distance rather than L2 as L1 encourages less blurring:
 
-<img src="asset/obj3.jpg" width="50%" height="10%" align="middle">
+<img src="assets/obj3.jpg" width="50%" height="10%" align="middle">
 
 Our final objective is
 
-<img src="asset/obj4.jpg" width="50%" height="10%" align="middle">
+<img src="assets/obj4.jpg" width="50%" height="10%" align="middle">
 
 Without z, the net could still learn a mapping from x to y, but would produce deterministic outputs, and therefore fail to match any distribution other than a delta function. Past conditional GANs have acknowledged this and provided Gaussian noise z as an input to the generator, in addition to x.
 
 ### U-Net Generator
 A U-Net architecture allows low-level information to shortcut across the network. The encoder-decoder is created simply by severing the skip connections in the UNet. The encoder-decoder is unable to learn to generate realistic images in our experiments. The advantages of the U-Net appear not to be specific to conditional GANs: when both U-Net and encoder-decoder are trained with an L1 loss, the U-Net again achieves the superior results.
 
-<img src="asset/u-net.jpg" width="40%" height="40%" align="middle">
+<img src="assets/u-net.jpg" width="40%" height="40%" align="middle">
